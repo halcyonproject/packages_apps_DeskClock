@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.MenuItem;
 
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SeekBarPreference;
@@ -28,12 +29,14 @@ import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.deskclock.R;
 import com.android.deskclock.data.DataModel;
-import com.android.deskclock.widget.CollapsingToolbarBaseActivity;
+import com.android.deskclock.widget.ToolbarBaseActivity;
+
+import java.util.Locale;
 
 /**
  * Settings for Clock screen saver
  */
-public final class ScreensaverSettingsActivity extends CollapsingToolbarBaseActivity {
+public final class ScreensaverSettingsActivity extends ToolbarBaseActivity {
 
     public static final String KEY_CLOCK_STYLE = "screensaver_clock_style";
     public static final String KEY_CLOCK_COLOR = "screensaver_clock_color";
@@ -95,14 +98,14 @@ public final class ScreensaverSettingsActivity extends CollapsingToolbarBaseActi
         public boolean onPreferenceChange(Preference pref, Object newValue) {
             switch (pref.getKey()) {
                 case KEY_CLOCK_STYLE:
-                    final SimpleMenuPreference clockStylePref = (SimpleMenuPreference) pref;
+                    final ListPreference clockStylePref = (ListPreference) pref;
                     final int clockStyleindex = clockStylePref.findIndexOfValue((String) newValue);
                     clockStylePref.setSummary(clockStylePref.getEntries()[clockStyleindex]);
                     setVisibility(newValue.equals(CLOCK_STYLE_DIGITAL));
                     break;
                 case KEY_NIGHT_MODE_COLOR:
                 case KEY_CLOCK_COLOR:
-                    final SimpleMenuPreference clockColorPref = (SimpleMenuPreference) pref;
+                    final ListPreference clockColorPref = (ListPreference) pref;
                     final int clockColorindex = clockColorPref.findIndexOfValue((String) newValue);
                     clockColorPref.setSummary(clockColorPref.getEntries()[clockColorindex]);
                     break;
@@ -117,9 +120,9 @@ public final class ScreensaverSettingsActivity extends CollapsingToolbarBaseActi
         }
 
         private void refresh() {
-            final SimpleMenuPreference clockStylePref = findPreference(KEY_CLOCK_STYLE);
-            final SimpleMenuPreference clockColorPref = findPreference(KEY_CLOCK_COLOR);
-            final SimpleMenuPreference nightModeColorPref = findPreference(KEY_NIGHT_MODE_COLOR);
+            final ListPreference clockStylePref = findPreference(KEY_CLOCK_STYLE);
+            final ListPreference clockColorPref = findPreference(KEY_CLOCK_COLOR);
+            final ListPreference nightModeColorPref = findPreference(KEY_NIGHT_MODE_COLOR);
             final SwitchPreferenceCompat nightModePref = findPreference(KEY_NIGHT_MODE);
             final SwitchPreferenceCompat nightModeDndPref = findPreference(KEY_NIGHT_MODE_DND);
             final SwitchPreferenceCompat showAmPmPref = findPreference(KEY_SHOW_AMPM);
@@ -127,7 +130,7 @@ public final class ScreensaverSettingsActivity extends CollapsingToolbarBaseActi
             final SeekBarPreference nightModeBrightness = findPreference(KEY_NIGHT_MODE_BRIGHTNESS);
             if (clockStylePref != null) {
                 final int index = clockStylePref.findIndexOfValue(DataModel.getDataModel().
-                        getScreensaverClockStyle().toString().toLowerCase());
+                        getScreensaverClockStyle().toString().toLowerCase(Locale.US));
                 clockStylePref.setValueIndex(index);
                 clockStylePref.setSummary(clockStylePref.getEntries()[index]);
                 clockStylePref.setOnPreferenceChangeListener(this);
@@ -143,7 +146,7 @@ public final class ScreensaverSettingsActivity extends CollapsingToolbarBaseActi
                 final int indexColor = nightModeColorPref.findIndexOfValue(DataModel.getDataModel().
                         getScreensaverClockNightModeColor());
                 nightModeColorPref.setValueIndex(indexColor);
-                nightModeColorPref.setSummary(clockColorPref.getEntries()[indexColor]);
+                nightModeColorPref.setSummary(nightModeColorPref.getEntries()[indexColor]);
                 nightModeColorPref.setOnPreferenceChangeListener(this);
             }
             if (nightModePref != null) {
