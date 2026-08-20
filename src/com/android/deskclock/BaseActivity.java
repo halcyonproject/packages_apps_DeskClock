@@ -40,6 +40,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        getWindow().setNavigationBarColor(android.graphics.Color.TRANSPARENT);
 
         final @ColorInt int color = ThemeUtils.resolveColor(this, android.R.attr.windowBackground);
         adjustAppColor(color);

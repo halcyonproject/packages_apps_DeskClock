@@ -16,8 +16,10 @@ android_app {
     srcs: [
         "src/**/*.java",
         "gen/**/*.java",
+        "src/**/*.kt",
     ],
     product_specific: true,
+    kotlincflags: ["-Xjvm-default=all"],
     static_libs: [
         "androidx.annotation_annotation",
         "androidx.collection_collection",
@@ -32,7 +34,15 @@ android_app {
         "androidx.appcompat_appcompat",
         "androidx.gridlayout_gridlayout",
         "androidx.recyclerview_recyclerview",
-        "androidx-constraintlayout_constraintlayout"
+        "androidx-constraintlayout_constraintlayout",
+        "HalcyonUILib",
+        "androidx.compose.ui_ui",
+        "androidx.compose.runtime_runtime",
+        "androidx.compose.material3_material3",
+        "androidx.compose.foundation_foundation",
+        "androidx.compose.animation_animation",
+        "androidx.compose.material_material-icons-extended",
+        "BlurView",
     ],
     required: [
         "com.android.deskclock_allowlist",

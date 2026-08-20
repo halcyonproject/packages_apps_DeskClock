@@ -46,6 +46,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import com.android.deskclock.actionbarmenu.AddAlarmMenuItemController;
+import com.android.deskclock.actionbarmenu.CitiesMenuItemController;
 import com.android.deskclock.actionbarmenu.OptionsMenuManager;
 import com.android.deskclock.actionbarmenu.SettingsMenuItemController;
 import com.android.deskclock.data.DataModel;
@@ -58,8 +60,6 @@ import com.android.deskclock.timer.TimerService;
 import com.android.deskclock.uidata.TabListener;
 import com.android.deskclock.uidata.UiDataModel;
 import com.android.deskclock.widget.toast.SnackbarManager;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -113,7 +113,7 @@ public class DeskClock extends BaseActivity
     private TextView mTitleView;
 
     /** The bottom navigation bar */
-    private BottomNavigationView mBottomNavigation;
+    private HalcyonBottomNavBar mBottomNavigation;
 
     private FragmentUtils mFragmentUtils;
 
@@ -159,7 +159,10 @@ public class DeskClock extends BaseActivity
         }
 
         // Configure the menu item controllers add behavior to the toolbar.
-        mOptionsMenuManager.addMenuItemController(new SettingsMenuItemController(this, true));
+        mOptionsMenuManager.addMenuItemController(
+                new AddAlarmMenuItemController(this),
+                new CitiesMenuItemController(this),
+                new SettingsMenuItemController(this, true));
 
         // Inflate the menu during creation to avoid a double layout pass. Otherwise, the menu
         // inflation occurs *after* the initial draw and a second layout pass adds in the menu.
@@ -231,28 +234,15 @@ public class DeskClock extends BaseActivity
         mFragmentUtils = new FragmentUtils(this);
         // Mirror changes made to the selected tab into UiDataModel.
         mBottomNavigation = findViewById(R.id.bottom_view);
-        mBottomNavigation.setOnItemSelectedListener(mNavigationListener);
-
-        // Honor changes to the selected tab from outside entities.
-        UiDataModel.getUiDataModel().addTabListener(mTabChangeWatcher);
-
-        mTitleView = findViewById(R.id.title_view);
-    }
-
-    private final NavigationBarView.OnItemSelectedListener mNavigationListener
-            = new BottomNavigationView.OnItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        mBottomNavigation.setOnTabSelectedListener(tabResId -> {
             UiDataModel.Tab selectedTab = null;
-            int itemId = item.getItemId();
-            if (itemId == R.id.page_alarm) {
+            if (tabResId == R.id.page_alarm) {
                 selectedTab = UiDataModel.Tab.ALARMS;
-            } else if (itemId == R.id.page_clock) {
+            } else if (tabResId == R.id.page_clock) {
                 selectedTab = UiDataModel.Tab.CLOCKS;
-            } else if (itemId == R.id.page_timer) {
+            } else if (tabResId == R.id.page_timer) {
                 selectedTab = UiDataModel.Tab.TIMERS;
-            } else if (itemId == R.id.page_stopwatch) {
+            } else if (tabResId == R.id.page_stopwatch) {
                 selectedTab = UiDataModel.Tab.STOPWATCH;
             }
 
@@ -271,12 +261,16 @@ public class DeskClock extends BaseActivity
                     }
                 }
                 UiDataModel.getUiDataModel().setSelectedTab(selectedTab);
-                return true;
             }
+        });
 
-            return false;
-        }
-    };
+        // Honor changes to the selected tab from outside entities.
+        UiDataModel.getUiDataModel().addTabListener(mTabChangeWatcher);
+
+        mTitleView = findViewById(R.id.title_view);
+    }
+
+
 
     @Override
     protected void onStart() {
@@ -539,10 +533,11 @@ public class DeskClock extends BaseActivity
     private void updateCurrentTab() {
         // Fetch the selected tab from the source of truth: UiDataModel.
         final UiDataModel.Tab selectedTab = UiDataModel.getUiDataModel().getSelectedTab();
-        // Update the selected tab in the mBottomNavigation if it does not agree with UiDataModel.
-        mBottomNavigation.setSelectedItemId(selectedTab.getPageResId());
+        // Sync the Halcyon bar's selected state without firing the tab listener.
+        mBottomNavigation.setSelectedTab(selectedTab.getPageResId());
         mFragmentUtils.showFragment(selectedTab);
         mTitleView.setText(selectedTab.getLabelResId());
+        invalidateOptionsMenu();
     }
 
     /**
@@ -553,10 +548,12 @@ public class DeskClock extends BaseActivity
     }
 
     /**
-     * @return a Snackbar that displays the message with the given id for 5 seconds
+     * @return a Snackbar that displays the message with the given id for 5 seconds,
+     * anchored above the floating bottom navigation bar.
      */
     private Snackbar createSnackbar(@StringRes int messageId) {
-        return Snackbar.make(mSnackbarAnchor, messageId, 5000 /* duration */);
+        return Snackbar.make(mSnackbarAnchor, messageId, 5000 /* duration */)
+                .setAnchorView(mBottomNavigation);
     }
 
     /**

@@ -15,117 +15,127 @@
   limitations under the License.
   -->
 
-<LinearLayout
+<!--
+  Root FrameLayout allows HalcyonBottomNavBar to float over content via
+  layout_gravity="bottom" — no space is reserved at the bottom for the bar.
+-->
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    app:statusBarBackground="@null"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <!-- Toolbar + content area stacked vertically -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        app:elevation="0dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:statusBarBackground="@null"
+        android:fitsSystemWindows="true">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentInsetStart="0dp"
-            tools:ignore="RtlSymmetry"
-            android:gravity="center">
+            android:background="@null"
+            app:elevation="0dp">
 
-            <TextView
-                android:id="@+id/title_view"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginStart="24dp"
-                style="@style/TextAppearance.Title" />
+                app:contentInsetStart="0dp"
+                tools:ignore="RtlSymmetry"
+                android:gravity="center">
 
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
+                <TextView
+                    android:id="@+id/title_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="24dp"
+                    style="@style/TextAppearance.Title" />
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <FrameLayout
-            android:id="@+id/fragment_container"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/fab_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            app:layout_dodgeInsetEdges="bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <FrameLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/left_button"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/fab_container"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:contentDescription="@null"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="96dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                app:layout_dodgeInsetEdges="bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/fab"
-                app:layout_constraintHorizontal_bias="0.6"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:backgroundTint="?attr/colorSecondary"
-                app:tint="?attr/colorOnSecondary" />
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/fab_margin"
-                android:contentDescription="@null"
-                app:fabCustomSize="@dimen/fab_height"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:backgroundTint="?attr/colorPrimary"
-                app:tint="?attr/colorOnPrimary" />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/left_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/fab"
+                    app:layout_constraintHorizontal_bias="0.6"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:backgroundTint="?attr/colorSecondary"
+                    app:tint="?attr/colorOnSecondary" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/right_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:contentDescription="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.4"
-                app:layout_constraintStart_toEndOf="@id/fab"
-                app:layout_constraintTop_toTopOf="parent"
-                app:backgroundTint="?attr/colorSecondary"
-                app:tint="?attr/colorOnSecondary" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/fab_margin"
+                    android:contentDescription="@null"
+                    app:fabCustomSize="@dimen/fab_height"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:backgroundTint="?attr/colorPrimary"
+                    app:tint="?attr/colorOnPrimary" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/right_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.4"
+                    app:layout_constraintStart_toEndOf="@id/fab"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:backgroundTint="?attr/colorSecondary"
+                    app:tint="?attr/colorOnSecondary" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </LinearLayout>
+
+    <!-- HalcyonBottomNavBar: floats over content, no space reserved -->
+    <com.android.deskclock.HalcyonBottomNavBar
         android:id="@+id/bottom_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurfaceVariant"
-        app:menu="@menu/bottom_navigation_menu"
-        app:itemIconTint="@color/tab_tint_color"
-        app:itemTextColor="@color/tab_tint_color"
-        app:itemTextAppearanceActive="@style/navText"
-        app:itemTextAppearanceInactive="@style/navText"
-        app:labelVisibilityMode="labeled" />
-</LinearLayout>
+        android:layout_marginBottom="28dp"
+        android:layout_gravity="bottom"/>
+
+</FrameLayout>
+

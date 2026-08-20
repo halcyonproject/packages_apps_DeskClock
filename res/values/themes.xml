@@ -19,7 +19,7 @@
 
     <style name="Theme.DeskClock" parent="Theme.Material3Expressive.DynamicColors.Dark.NoActionBar">
         <item name="android:colorBackgroundFloating">?attr/colorBackgroundFloating</item>
-        <item name="android:navigationBarColor">?attr/colorSurfaceVariant</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="popupMenuBackground">@drawable/popup_background</item>
         <item name="floatingActionButtonStyle">@style/Widget.DeskClock.FloatingActionButton</item>
 
@@ -54,10 +54,15 @@
         <item name="windowNoTitle">false</item>
     </style>
 
+    <style name="ShapeAppearance.DeskClock.FAB" parent="ShapeAppearance.Material3.Corner.Large">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
+
     <style name="Widget.DeskClock.FloatingActionButton"
         parent="Widget.Material3Expressive.FloatingActionButton">
         <item name="shapeAppearanceOverlay">
-            @style/ShapeAppearance.Material3.Corner.Full
+            @style/ShapeAppearance.DeskClock.FAB
         </item>
     </style>
 

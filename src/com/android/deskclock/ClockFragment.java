@@ -188,9 +188,7 @@ public final class ClockFragment extends DeskClockFragment {
 
     @Override
     public void onUpdateFab(@NonNull ImageView fab) {
-        fab.setVisibility(VISIBLE);
-        fab.setImageResource(R.drawable.ic_public);
-        fab.setContentDescription(fab.getResources().getString(R.string.button_cities));
+        fab.setVisibility(INVISIBLE);
     }
 
     @Override
@@ -201,7 +199,7 @@ public final class ClockFragment extends DeskClockFragment {
 
     @Override
     public int getFabTargetVisibility() {
-        return View.VISIBLE;
+        return View.INVISIBLE;
     }
 
     /**

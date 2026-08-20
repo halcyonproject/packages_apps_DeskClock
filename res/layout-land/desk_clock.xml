@@ -15,128 +15,129 @@
   limitations under the License.
   -->
 
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    app:statusBarBackground="@null"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        app:elevation="0dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:statusBarBackground="@null"
+        android:fitsSystemWindows="true">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentInsetStart="0dp"
-            tools:ignore="RtlSymmetry"
-            android:gravity="center">
+            android:background="@null"
+            app:elevation="0dp">
 
-            <TextView
-                android:id="@+id/title_view"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                android:paddingStart="24dp"
-                tools:text="Alarm"/>
+                app:contentInsetStart="0dp"
+                tools:ignore="RtlSymmetry"
+                android:gravity="center">
 
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
+                <TextView
+                    android:id="@+id/title_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:paddingStart="24dp"
+                    tools:text="Alarm"/>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <FrameLayout
-            android:id="@+id/fragment_container"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/fab_container" />
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/fab_container"
-            android:layout_width="@dimen/fab_container_width"
-            android:layout_height="match_parent"
-            android:baselineAligned="false"
-            android:orientation="vertical"
-            app:layout_behavior="com.android.deskclock.widget.toast.SnackbarSlidingBehavior"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/left_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:contentDescription="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+            <FrameLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fab"
-                app:layout_constraintVertical_bias="0.35"
-                android:backgroundTint="?attr/colorSecondary"
-                android:tint="?attr/colorOnSecondary"/>
+                app:layout_constraintEnd_toStartOf="@id/fab_container" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/fab_margin"
-                android:contentDescription="@null"
-                app:borderWidth="0dp"
-                app:fabCustomSize="@dimen/fab_height"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:backgroundTint="?attr/colorPrimary"
-                app:tint="?attr/colorOnPrimary"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/fab_container"
+                android:layout_width="@dimen/fab_container_width"
+                android:layout_height="match_parent"
+                android:baselineAligned="false"
+                android:orientation="vertical"
+                app:layout_behavior="com.android.deskclock.widget.toast.SnackbarSlidingBehavior"
+                app:layout_constraintEnd_toEndOf="parent">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/right_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:contentDescription="@null"
-                app:layout_constraintBottom_toTopOf="@+id/fab"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.65"
-                android:backgroundTint="?attr/colorSecondary"
-                android:tint="?attr/colorOnSecondary"/>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/left_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fab"
+                    app:layout_constraintVertical_bias="0.35"
+                    android:backgroundTint="?attr/colorSecondary"
+                    android:tint="?attr/colorOnSecondary"/>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/fab_margin"
+                    android:contentDescription="@null"
+                    app:borderWidth="0dp"
+                    app:fabCustomSize="@dimen/fab_height"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:backgroundTint="?attr/colorPrimary"
+                    app:tint="?attr/colorOnPrimary"/>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/right_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    app:layout_constraintBottom_toTopOf="@+id/fab"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.65"
+                    android:backgroundTint="?attr/colorSecondary"
+                    android:tint="?attr/colorOnSecondary"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <com.android.deskclock.HalcyonBottomNavBar
         android:id="@+id/bottom_view"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:background="?attr/colorSurfaceVariant"
-        app:menu="@menu/bottom_navigation_menu"
-        app:itemIconTint="@color/tab_tint_color"
-        app:itemTextColor="@color/tab_tint_color"
-        app:itemTextAppearanceActive="@style/navText"
-        app:itemTextAppearanceInactive="@style/navText"
-        app:labelVisibilityMode="labeled" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:layout_gravity="bottom"/>
 
-</LinearLayout>
+</FrameLayout>

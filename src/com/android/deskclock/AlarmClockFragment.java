@@ -392,9 +392,7 @@ public final class AlarmClockFragment extends DeskClockFragment implements
 
     @Override
     public void onUpdateFab(@NonNull ImageView fab) {
-        fab.setVisibility(View.VISIBLE);
-        fab.setImageResource(R.drawable.ic_add_24dp);
-        fab.setContentDescription(fab.getResources().getString(R.string.button_alarms));
+        fab.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -405,10 +403,10 @@ public final class AlarmClockFragment extends DeskClockFragment implements
 
     @Override
     public int getFabTargetVisibility() {
-        return View.VISIBLE;
+        return View.INVISIBLE;
     }
 
-    private void startCreatingAlarm() {
+    public void startCreatingAlarm() {
         // Clear the currently selected alarm.
         mAlarmTimeClickHandler.setSelectedAlarm(null);
         TimePickerDialogFragment.show(this);
