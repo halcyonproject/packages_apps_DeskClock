@@ -19,12 +19,14 @@ package com.android.deskclock
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Alarm
 import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material.icons.filled.Timelapse
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import org.hlcyn.ui.components.HalcyonFloatingBottomBar
 import org.hlcyn.ui.components.HalcyonFloatingBottomBarItem
@@ -59,7 +61,9 @@ class HalcyonBottomNavBar @JvmOverloads constructor(
         addView(composeView)
         composeView.setContent {
             HalcyonTheme(darkTheme = true) {
-                HalcyonFloatingBottomBar {
+                HalcyonFloatingBottomBar(
+                    modifier = Modifier.navigationBarsPadding()
+                ) {
                     HalcyonFloatingBottomBarItem(
                         selected = selectedTabState.value == R.id.page_alarm,
                         onClick = { selectTab(R.id.page_alarm) },
