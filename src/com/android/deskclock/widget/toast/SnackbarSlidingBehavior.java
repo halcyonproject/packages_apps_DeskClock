@@ -16,6 +16,8 @@
 
 package com.android.deskclock.widget.toast;
 
+import android.content.Context;
+import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Keep;
@@ -29,6 +31,13 @@ import com.google.android.material.snackbar.Snackbar;
  */
 @Keep
 public final class SnackbarSlidingBehavior extends CoordinatorLayout.Behavior<View> {
+
+    public SnackbarSlidingBehavior() {
+    }
+
+    public SnackbarSlidingBehavior(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
     @Override
     public boolean layoutDependsOn(@NonNull CoordinatorLayout parent, @NonNull View child,
@@ -46,6 +55,7 @@ public final class SnackbarSlidingBehavior extends CoordinatorLayout.Behavior<Vi
     @Override
     public void onDependentViewRemoved(@NonNull CoordinatorLayout parent, @NonNull View child,
                                        @NonNull View dependency) {
+        child.setTranslationY(0f);
         updateTranslationY(parent, child);
     }
 
@@ -59,7 +69,9 @@ public final class SnackbarSlidingBehavior extends CoordinatorLayout.Behavior<Vi
     private void updateTranslationY(CoordinatorLayout parent, View child) {
         float translationY = 0f;
         for (View dependency : parent.getDependencies(child)) {
-            translationY = Math.min(translationY, dependency.getY() - child.getBottom());
+            if (dependency instanceof Snackbar.SnackbarLayout && dependency.isAttachedToWindow()) {
+                translationY = Math.min(translationY, dependency.getY() - child.getBottom());
+            }
         }
         child.setTranslationY(translationY);
     }

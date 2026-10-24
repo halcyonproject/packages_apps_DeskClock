@@ -16,6 +16,12 @@
 
 package com.android.deskclock.widget.toast;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.view.View;
+
+import com.android.deskclock.R;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.lang.ref.WeakReference;
@@ -31,6 +37,12 @@ public final class SnackbarManager {
 
     public static void show(Snackbar snackbar) {
         sSnackbar = new WeakReference<>(snackbar);
+        if (snackbar.getAnchorView() == null) {
+            final View bottomView = findBottomView(snackbar);
+            if (bottomView != null) {
+                snackbar.setAnchorView(bottomView);
+            }
+        }
         snackbar.show();
     }
 
@@ -40,5 +52,29 @@ public final class SnackbarManager {
             snackbar.dismiss();
             sSnackbar = null;
         }
+    }
+
+    private static View findBottomView(Snackbar snackbar) {
+        Context context = snackbar.getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                final View bottomView = ((Activity) context).findViewById(R.id.bottom_view);
+                if (bottomView != null && bottomView.getVisibility() == View.VISIBLE) {
+                    return bottomView;
+                }
+                break;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+
+        final View snackbarView = snackbar.getView();
+        final View rootView = snackbarView.getRootView();
+        if (rootView != null) {
+            final View bottomView = rootView.findViewById(R.id.bottom_view);
+            if (bottomView != null && bottomView.getVisibility() == View.VISIBLE) {
+                return bottomView;
+            }
+        }
+        return null;
     }
 }

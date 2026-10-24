@@ -80,7 +80,7 @@
                 android:orientation="horizontal"
                 app:layout_dodgeInsetEdges="bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                app:layout_behavior="com.android.deskclock.widget.toast.SnackbarSlidingBehavior">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/left_button"
